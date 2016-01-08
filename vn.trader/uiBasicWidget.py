@@ -275,9 +275,10 @@ class BasicMonitor(QtGui.QTableWidget):
                 d = self.dataDict[key]
                 for header in self.headerList:
                     content = safeUnicode(data.__getattribute__(header))
+                    #cell = BasicCell(d[header])
                     cell = d[header]
-                    cell.setContent(content, self.mainEngine)
-                    
+                    #cell.setContent(content, self.mainEngine)
+                    cell.setContent(content)
                     if self.saveData:            # 如果设置了保存数据对象，则进行对象保存
                         cell.data = data                    
         # 否则采用增量更新模式
@@ -567,21 +568,12 @@ class TradingWidget(QtGui.QFrame):
                     EXCHANGE_CFFEX,
                     EXCHANGE_SHFE,
                     EXCHANGE_DCE,
-                    EXCHANGE_CZCE,
-                    EXCHANGE_SSE,
-                    EXCHANGE_SZSE,
-                    EXCHANGE_SGE,
-                    EXCHANGE_SMART,
-                    EXCHANGE_GLOBEX,
-                    EXCHANGE_IDEALPRO]
+                    EXCHANGE_CZCE]
     
-    currencyList = [CURRENCY_CNY,
-                    CURRENCY_USD]
+    currencyList = [CURRENCY_CNY]
     
     productClassList = [PRODUCT_UNKNOWN,
-                        PRODUCT_EQUITY,
-                        PRODUCT_FUTURES,
-                        PRODUCT_OPTION]
+                        PRODUCT_FUTURES]
     
     gatewayList = ['']
 
@@ -692,34 +684,34 @@ class TradingWidget(QtGui.QFrame):
         # labelAsk4 = QtGui.QLabel(u'卖四')
         # labelAsk5 = QtGui.QLabel(u'卖五')
         #
-        # self.labelBidPrice1 = QtGui.QLabel()
+        self.labelBidPrice1 = QtGui.QLabel()
         # self.labelBidPrice2 = QtGui.QLabel()
         # self.labelBidPrice3 = QtGui.QLabel()
         # self.labelBidPrice4 = QtGui.QLabel()
         # self.labelBidPrice5 = QtGui.QLabel()
-        # self.labelBidVolume1 = QtGui.QLabel()
+        self.labelBidVolume1 = QtGui.QLabel()
         # self.labelBidVolume2 = QtGui.QLabel()
         # self.labelBidVolume3 = QtGui.QLabel()
         # self.labelBidVolume4 = QtGui.QLabel()
         # self.labelBidVolume5 = QtGui.QLabel()
-        #
-        # self.labelAskPrice1 = QtGui.QLabel()
+
+        self.labelAskPrice1 = QtGui.QLabel()
         # self.labelAskPrice2 = QtGui.QLabel()
         # self.labelAskPrice3 = QtGui.QLabel()
         # self.labelAskPrice4 = QtGui.QLabel()
         # self.labelAskPrice5 = QtGui.QLabel()
-        # self.labelAskVolume1 = QtGui.QLabel()
+        self.labelAskVolume1 = QtGui.QLabel()
         # self.labelAskVolume2 = QtGui.QLabel()
         # self.labelAskVolume3 = QtGui.QLabel()
         # self.labelAskVolume4 = QtGui.QLabel()
         # self.labelAskVolume5 = QtGui.QLabel()
         #
         # labelLast = QtGui.QLabel(u'最新')
-        # self.labelLastPrice = QtGui.QLabel()
-        # self.labelReturn = QtGui.QLabel()
+        self.labelLastPrice = QtGui.QLabel()
+        self.labelReturn = QtGui.QLabel()
         #
-        # self.labelLastPrice.setMinimumWidth(60)
-        # self.labelReturn.setMinimumWidth(60)
+        self.labelLastPrice.setMinimumWidth(60)
+        self.labelReturn.setMinimumWidth(60)
         #
         # gridRight = QtGui.QGridLayout()
         # gridRight.addWidget(labelAsk5, 0, 0)
@@ -789,10 +781,15 @@ class TradingWidget(QtGui.QFrame):
         """合约变化"""
         # 读取组件数据
         symbol = str(self.lineSymbol.text())
-        exchange = unicode(self.comboExchange.currentText())
-        currency = unicode(self.comboCurrency.currentText())
-        productClass = unicode(self.comboProductClass.currentText())           
-        gatewayName = unicode(self.comboGateway.currentText())
+        #exchange = unicode(self.comboExchange.currentText())
+        #currency = unicode(self.comboCurrency.currentText())
+        #productClass = unicode(self.comboProductClass.currentText())
+
+        exchange = ""
+        currency = CURRENCY_CNY
+        productClass = PRODUCT_FUTURES
+
+        gatewayName = "CTP"
         
         # 查询合约
         if exchange:
@@ -814,27 +811,27 @@ class TradingWidget(QtGui.QFrame):
 
         # 清空行情显示
         self.labelBidPrice1.setText('')
-        self.labelBidPrice2.setText('')
-        self.labelBidPrice3.setText('')
-        self.labelBidPrice4.setText('')
-        self.labelBidPrice5.setText('')
+        # self.labelBidPrice2.setText('')
+        # self.labelBidPrice3.setText('')
+        # self.labelBidPrice4.setText('')
+        # self.labelBidPrice5.setText('')
         self.labelBidVolume1.setText('')
-        self.labelBidVolume2.setText('')
-        self.labelBidVolume3.setText('')
-        self.labelBidVolume4.setText('')
-        self.labelBidVolume5.setText('')	
+        # self.labelBidVolume2.setText('')
+        # self.labelBidVolume3.setText('')
+        # self.labelBidVolume4.setText('')
+        # self.labelBidVolume5.setText('')
         self.labelAskPrice1.setText('')
-        self.labelAskPrice2.setText('')
-        self.labelAskPrice3.setText('')
-        self.labelAskPrice4.setText('')
-        self.labelAskPrice5.setText('')
+        # self.labelAskPrice2.setText('')
+        # self.labelAskPrice3.setText('')
+        # self.labelAskPrice4.setText('')
+        # self.labelAskPrice5.setText('')
         self.labelAskVolume1.setText('')
-        self.labelAskVolume2.setText('')
-        self.labelAskVolume3.setText('')
-        self.labelAskVolume4.setText('')
-        self.labelAskVolume5.setText('')
-        self.labelLastPrice.setText('')
-        self.labelReturn.setText('')
+        # self.labelAskVolume2.setText('')
+        # self.labelAskVolume3.setText('')
+        # self.labelAskVolume4.setText('')
+        # self.labelAskVolume5.setText('')
+        # self.labelLastPrice.setText('')
+        #self.labelReturn.setText('')
 
         # 重新注册事件监听
         self.eventEngine.unregister(EVENT_TICK + self.symbol, self.signal.emit)
@@ -863,26 +860,26 @@ class TradingWidget(QtGui.QFrame):
             self.labelBidVolume1.setText(str(tick.bidVolume1))
             self.labelAskVolume1.setText(str(tick.askVolume1))
             
-            if tick.bidPrice2:
-                self.labelBidPrice2.setText(str(tick.bidPrice2))
-                self.labelBidPrice3.setText(str(tick.bidPrice3))
-                self.labelBidPrice4.setText(str(tick.bidPrice4))
-                self.labelBidPrice5.setText(str(tick.bidPrice5))
-    
-                self.labelAskPrice2.setText(str(tick.askPrice2))
-                self.labelAskPrice3.setText(str(tick.askPrice3))
-                self.labelAskPrice4.setText(str(tick.askPrice4))
-                self.labelAskPrice5.setText(str(tick.askPrice5))
-    
-                self.labelBidVolume2.setText(str(tick.bidVolume2))
-                self.labelBidVolume3.setText(str(tick.bidVolume3))
-                self.labelBidVolume4.setText(str(tick.bidVolume4))
-                self.labelBidVolume5.setText(str(tick.bidVolume5))
-                
-                self.labelAskVolume2.setText(str(tick.askVolume2))
-                self.labelAskVolume3.setText(str(tick.askVolume3))
-                self.labelAskVolume4.setText(str(tick.askVolume4))
-                self.labelAskVolume5.setText(str(tick.askVolume5))	
+            # if tick.bidPrice2:
+            #     self.labelBidPrice2.setText(str(tick.bidPrice2))
+            #     self.labelBidPrice3.setText(str(tick.bidPrice3))
+            #     self.labelBidPrice4.setText(str(tick.bidPrice4))
+            #     self.labelBidPrice5.setText(str(tick.bidPrice5))
+            #
+            #     self.labelAskPrice2.setText(str(tick.askPrice2))
+            #     self.labelAskPrice3.setText(str(tick.askPrice3))
+            #     self.labelAskPrice4.setText(str(tick.askPrice4))
+            #     self.labelAskPrice5.setText(str(tick.askPrice5))
+            #
+            #     self.labelBidVolume2.setText(str(tick.bidVolume2))
+            #     self.labelBidVolume3.setText(str(tick.bidVolume3))
+            #     self.labelBidVolume4.setText(str(tick.bidVolume4))
+            #     self.labelBidVolume5.setText(str(tick.bidVolume5))
+            #
+            #     self.labelAskVolume2.setText(str(tick.askVolume2))
+            #     self.labelAskVolume3.setText(str(tick.askVolume3))
+            #     self.labelAskVolume4.setText(str(tick.askVolume4))
+            #     self.labelAskVolume5.setText(str(tick.askVolume5))
 
             self.labelLastPrice.setText(str(tick.lastPrice))
             
@@ -921,10 +918,12 @@ class TradingWidget(QtGui.QFrame):
         #
 
         currency = CURRENCY_CNY
-        productClass = "Fut"
+        productClass = PRODUCT_FUTURES
         gatewayName = "CTP"
         vtSymbol = symbol
-        contract = self.dataEngine.getContract(symbol)
+        #contract = self.dataEngine.getContract(symbol)
+        contract = self.mainEngine.getContract(symbol)
+
         if contract:
             gatewayName = contract.gatewayName
             exchange = contract.exchange    # 保证有交易所代码

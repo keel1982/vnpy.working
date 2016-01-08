@@ -109,28 +109,28 @@ class SimpleEmaStrategy(StrategyTemplate):
                 tick.ms = data['UpdateMillisec']
                 
                 tick.bidPrice1 = data['BidPrice1']
-                tick.bidPrice2 = data['BidPrice2']
-                tick.bidPrice3 = data['BidPrice3']
-                tick.bidPrice4 = data['BidPrice4']
-                tick.bidPrice5 = data['BidPrice5']
+                # tick.bidPrice2 = data['BidPrice2']
+                # tick.bidPrice3 = data['BidPrice3']
+                # tick.bidPrice4 = data['BidPrice4']
+                # tick.bidPrice5 = data['BidPrice5']
                 
                 tick.askPrice1 = data['AskPrice1']
-                tick.askPrice2 = data['AskPrice2']
-                tick.askPrice3 = data['AskPrice3']
-                tick.askPrice4 = data['AskPrice4']
-                tick.askPrice5 = data['AskPrice5']   
+                # tick.askPrice2 = data['AskPrice2']
+                # tick.askPrice3 = data['AskPrice3']
+                # tick.askPrice4 = data['AskPrice4']
+                # tick.askPrice5 = data['AskPrice5']
                 
                 tick.bidVolume1 = data['BidVolume1']
-                tick.bidVolume2 = data['BidVolume2']
-                tick.bidVolume3 = data['BidVolume3']
-                tick.bidVolume4 = data['BidVolume4']
-                tick.bidVolume5 = data['BidVolume5']
+                # tick.bidVolume2 = data['BidVolume2']
+                # tick.bidVolume3 = data['BidVolume3']
+                # tick.bidVolume4 = data['BidVolume4']
+                # tick.bidVolume5 = data['BidVolume5']
                 
                 tick.askVolume1 = data['AskVolume1']
-                tick.askVolume2 = data['AskVolume2']
-                tick.askVolume3 = data['AskVolume3']
-                tick.askVolume4 = data['AskVolume4']
-                tick.askVolume5 = data['AskVolume5']   
+                # tick.askVolume2 = data['AskVolume2']
+                # tick.askVolume3 = data['AskVolume3']
+                # tick.askVolume4 = data['AskVolume4']
+                # tick.askVolume5 = data['AskVolume5']
                 
                 self.onTick(tick)
                 
@@ -273,11 +273,11 @@ def main():
     me.ee.register(EVENT_LOG, print_log)
     
     # 登录
-    userid = ''
-    password = ''
-    brokerid = ''
-    mdAddress = ''
-    tdAddress = ''
+    userid = '046481'
+    password = '12345678'
+    brokerid = '9999'
+    mdAddress = 'tcp://180.168.146.187:10011'
+    tdAddress = 'tcp://180.168.146.187:10001'
     
     me.login(userid, password, brokerid, mdAddress, tdAddress)
     

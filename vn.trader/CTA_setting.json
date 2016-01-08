@@ -1,10 +1,10 @@
 {
     "DR_IF1512": {
-        "strategyClassName": "DataRecorder", 
-        "vtSymbol": "IF1512"
+        "strategyClassName": "TestStrategy",
+        "vtSymbol": "IF1601"
     }, 
     "DR_IH1512": {
         "strategyClassName": "DataRecorder", 
-        "vtSymbol": "IH1512"
+        "vtSymbol": "IH1601"
     }
 }

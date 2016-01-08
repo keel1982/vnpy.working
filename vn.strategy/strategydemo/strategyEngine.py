@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
 from datetime import datetime
-
-from pymongo import Connection
+import pymongo
+#from pymongo import Connection
 from pymongo.errors import *
 
 from eventEngine import *
@@ -194,7 +194,7 @@ class StrategyEngine(object):
     def __connectMongo(self):
         """连接MongoDB数据库"""
         try:
-            self.__mongoConnection = Connection()
+            self.__mongoConnection = pymongo.MongoClient()
             self.__mongoConnected = True
             self.__mongoTickDB = self.__mongoConnection['TickDB']
             self.writeLog(u'策略引擎连接MongoDB成功')
